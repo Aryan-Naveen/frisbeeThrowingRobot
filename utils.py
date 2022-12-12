@@ -3,6 +3,7 @@ from numpy.linalg import *
 import scipy.linalg as LA
 import numpy as np
 from ikShell import IKshell
+from tqdm import tqdm
 
 
 T_0_robot = [[0, -1, 0, -215], [0, 0, 1, 850], [-1, 0, 0, 600], [0, 0, 0, 1]]

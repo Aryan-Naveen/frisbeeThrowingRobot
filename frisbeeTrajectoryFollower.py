@@ -53,7 +53,7 @@ class PathFollower():
 
 
 if __name__ == '__main__':
-    frisbeeThrow = PathFollower('trajectory/backhandRonak.csv') # mm
+    frisbeeThrow = PathFollower('backhand_recording.csv') # mm
     rospy.init_node('frisbee_throw', anonymous=True)
     frisbeeThrow.followTrajectory()
     rospy.spin()
