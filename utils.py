@@ -24,7 +24,7 @@ def transformToRobotFrame(poses):
     return poses_robot
 
 def get_joint_trajectory(poses):
-    thguess = np.array([0, 0, 0, 0, 0, 0])
+    thguess = np.array([1.5291, -0.4803,    0.4122,   -3.1779,   -1.4916,    1.5533])
     trajectory_configuration = []
     for i in tqdm(range(len(poses))):
         trajectory_configuration.append(IKshell(poses[i], thguess))
