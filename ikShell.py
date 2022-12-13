@@ -127,7 +127,10 @@ def IKshell(T,theta0):
             if isinstance(thguess[i], complex):
                 thguess[i] = thguess[i].real
         thguess = np.array(thguess)
-
+        print("~~~~~~~~~~~~~~~~~")
+        print(Tab[:3, 3])
+        print(T[:3, 3])
+        print("~~~~~~~~~~~~~~~~~")
 
         i = i +  1
     # Once the algorithm has converged, return the final angle found:
@@ -268,11 +271,11 @@ def logm(A):
         theta = np.linalg.norm(p)
         W = skew(w)
     else:
-        if np.abs(np.trace(R) + 1) < 1e-8:
+        if np.abs(np.trace(R) + 1) < 1e-7:
             theta = np.pi
-            if np.abs(R[0, 0] + 1) > 1e-8:
+            if np.abs(R[0, 0] + 1) > 1e-7:
                 w = 1/np.sqrt(2*(1 + R[0, 0])) * np.array([1 + R[0, 0], R[1, 0], R[2, 0]])
-            elif np.abs(R[1, 1] + 1) > 1e-8:
+            elif np.abs(R[1, 1] + 1) > 1e-7:
                 w = 1/np.sqrt(2*(1 + R[1, 1])) * np.array([R[0, 1], 1 + R[1, 1], R[2, 1]])
             else:
                 w = 1/np.sqrt(2*(1 + R[2, 2])) * np.array([R[0, 2], R[1, 2], 1 + R[2, 2]])
