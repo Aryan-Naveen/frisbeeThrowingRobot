@@ -18,9 +18,9 @@ def readPoses(file_path):
 
 
 def transformToRobotFrame(poses):
-    T_0_robot = np.array([[0,    1,    0,   -694],
+    T_0_robot = np.array([[0,    -1,    0,   -694],
                           [0,     0,    1,    655],
-                          [1,    0,    0,    448],
+                          [-1,    0,    0,    448],
                           [0,     0,    0,    1]])
 
     T_r_camer = np.array([[0,     1,    0,    0],

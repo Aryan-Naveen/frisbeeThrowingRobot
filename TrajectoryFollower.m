@@ -1,17 +1,19 @@
 recorded_waypoints = read_waypoints("backhand_recording.csv");
 waypoints = transformToRobot(recorded_waypoints);
+recorded_waypoints_robot = mapRobot(recorded_waypoints)
 
 x = waypoints(:, 4:16:end)
 y = waypoints(:, 8:16:end)
 z = waypoints(:, 12:16:end)
 
-x1 = recorded_waypoints(:, 4:16:end);
-y1 = recorded_waypoints(:, 8:16:end);
-z1 = recorded_waypoints(:, 12:16:end);
+x1 = recorded_waypoints_robot(:, 4:16:end);
+y1 = recorded_waypoints_robot(:, 8:16:end);
+z1 = recorded_waypoints_robot(:, 12:16:end);
 
 hold on;
-scatter(x, y);
-scatter(x1, y1);
+scatter(x, y, 'DisplayName', 'Robot Trajectory');
+scatter(x1, y1, 'DisplayName', 'Tracked Trajectory');
+legend();
 %scatter3(recorded_waypoints(:, 8:16:end), recorded_waypoints(:, 4:16:end), recorded_waypoints(:, 12:16:end))
 
 %set(gca, 'YDir','reverse')
@@ -60,6 +62,27 @@ function waypoints = read_waypoints(file)
         waypoints(i, 4) = waypoints(i, 4) * 1000;
         waypoints(i, 8) = waypoints(i, 8) * 1000;
         waypoints(i, 12) = waypoints(i, 12) * 1000;
+    end
+end
+
+function mapToRobotCoordinates = mapRobot(waypoints)
+    T0r = [0 1 0 -632;
+               0 0 1 720;
+               1 0 0 439;
+               0 0 0 1];
+    Trc = [0,     0,    1,   0;
+           1,     0,    0,    0;
+           0,     -1,   0,    0;
+           0,     0,    0,    1];
+
+    mapToRobotCoordinates = zeros(size(waypoints));
+
+    for i = 1:size(waypoints, 1)
+        Ttc = reshape(waypoints(i, :), 4, 4)';
+%        Ttr = T0r * Trc * Tci * inv(Trc * inv(Ttc));
+        Ttr = inv(Trc * inv(Ttc));
+        robotT = Ttr;
+        mapToRobotCoordinates(i, :) = reshape(robotT', 1, 16);
     end
 end
 
